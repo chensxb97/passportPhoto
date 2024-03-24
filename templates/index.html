@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport Photo Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styling for disabled button */
+        button:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Passport Photo Maker</h1>
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+            <input id="input" type="file" name="file" onchange="checkForFile()">
+            <button id="upload" type="submit" disabled>Upload</button>
+        </form>
+        <p>Image will be resized and edited according to <a href="https://www.ica.gov.sg/photo-guidelines" target="_blank">ICA's Photo Image Guidelines</a></p>
+    </div>
+
+    <script>
+        // Inspect if file has been selected for upload
+        function checkForFile() {
+            let inputFile = document.getElementById('input');
+            let uploadButton = document.getElementById('upload');
+
+            if (inputFile.files.length > 0) {
+                uploadButton.disabled = false;
+            } else {
+                uploadButton.disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>
