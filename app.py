@@ -43,7 +43,7 @@ def upload():
         with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
             root = os.getcwd()
             filesDir = root + '/files'
-            filePath = f'{filesDir}/{filename}_processed{extension}'
+            filePath = f'{filesDir}/{filename}_resized{extension}'
             cv2.imwrite(filePath, processed_img)
         return send_file(filePath, as_attachment=True)
     else:
