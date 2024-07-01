@@ -1,8 +1,11 @@
-from flask import Flask, request, render_template, send_file, send_from_directory
+from flask import Flask, request, render_template, send_file
+from rembg import remove 
+from PIL import Image
 import tempfile
 import cv2
 import numpy as np
 import os
+import io
 
 app = Flask(__name__)
 
@@ -23,8 +26,21 @@ def process_image(file):
     # Check if there is only 1 face
     if len(faces) != 1:
         return None
+
+    # Remove background
+    output = remove(resized, bgcolor=(255, 255, 255, 255))
+    return output
+
+def send_image(processed, name, extension):
+    img_buffer = io.BytesIO()
+    success, encoding = cv2.imencode(extension, processed)
+    if not success:
+        raise ValueError("Image encoding failed")
     
-    return resized
+    img_buffer.write(encoding)
+    img_buffer.seek(0)
+
+    return send_file(img_buffer, mimetype=f'image/{extension.lstrip(".")}', as_attachment=True, download_name=f'{name}_resized{extension}')
 
 @app.route('/')
 def index():
@@ -32,22 +48,23 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    if 'file' not in request.files:
+        return 'No file uploaded', 400
+    
     file = request.files['file']
-    filename_with_extension = file.filename
-    filename, extension = os.path.splitext(filename_with_extension)
+    if file.filename == '':
+        return 'No file selected', 400
     
-    processed_img = process_image(file)
-    
-    # Send the image to client for download
-    if processed_img is not None:
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
-            root = os.getcwd()
-            filesDir = root + '/files'
-            filePath = f'{filesDir}/{filename}_resized{extension}'
-            cv2.imwrite(filePath, processed_img)
-        return send_file(filePath, as_attachment=True)
-    else:
+    name, extension = os.path.splitext(file.filename)
+
+    if file:
+        processed = process_image(file)
+
+    if processed is None:
         return 'Failed to process image. Image is either in an invalid format or image does not contain a face.', 400
+    
+    # Send the image back to client for download
+    return send_image(processed, name, extension)
 
 if __name__ == '__main__':
     app.run(debug=True)
