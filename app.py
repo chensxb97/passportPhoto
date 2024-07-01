@@ -1,7 +1,5 @@
 from flask import Flask, request, render_template, send_file
 from rembg import remove 
-from PIL import Image
-import tempfile
 import cv2
 import numpy as np
 import os
