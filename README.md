@@ -16,4 +16,4 @@ python app.py
 ```
 
 # Acknowledgements
-Fireship's rembg-webapp-tutorial - (https://github.com/codediodeio/rembg-webapp-tutorial)
+Fireship's rembg-webapp-tutorial - https://github.com/codediodeio/rembg-webapp-tutorial
