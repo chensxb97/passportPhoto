@@ -1,5 +1,5 @@
 # Passport Photo Maker
-A python program for generating passport photos that comply with [ICA's photo guidelines](https://www.ica.gov.sg/photo-guidelines).
+A python program that processes passport photos that comply with [ICA's photo guidelines](https://www.ica.gov.sg/photo-guidelines).
 
 # Requirements
 1. Photo must show a face, neck and shoulders.
@@ -8,6 +8,7 @@ A python program for generating passport photos that comply with [ICA's photo gu
 4. Program must replace the existing background with a full solid white background.
 
 # Usage
+On first run, the program will take some time to download the necessary AI weights from [U2Net](https://github.com/xuebinqin/U-2-Net) in order to execute the remove function from the [removebg](https://github.com/danielgatis/rembg) library.
 
 ```python
 pip -r requirements.txt
@@ -15,5 +16,4 @@ python app.py
 ```
 
 # Acknowledgements
-1. [removebg](https://github.com/danielgatis/rembg)
-2. [Fireship's rembg-webapp-tutorial](https://github.com/codediodeio/rembg-webapp-tutorial)
+Fireship's rembg-webapp-tutorial - (https://github.com/codediodeio/rembg-webapp-tutorial)
