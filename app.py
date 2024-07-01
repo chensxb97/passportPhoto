@@ -61,7 +61,7 @@ def upload():
         processed = process_image(file)
 
     if processed is None:
-        return 'Failed to process image. Image is either in an invalid format or image does not contain a face.', 400
+        return 'Process failed. Image is either in an invalid format or does not contain a face.', 400
     
     # Send the image back to client for download
     return send_image(processed, name, extension)
