@@ -11,7 +11,7 @@ A python program that processes passport photos that comply with [ICA's photo gu
 On first run, the program will take some time to download the necessary AI weights from [U2Net](https://github.com/xuebinqin/U-2-Net) in order to execute the remove function from the [removebg](https://github.com/danielgatis/rembg) library.
 
 ```python
-pip -r requirements.txt
+pip install -r requirements.txt
 python app.py
 ```
 
